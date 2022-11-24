@@ -1,4 +1,4 @@
-# new-crud
+# Generic-Table
 
 ## Project setup
 ```
