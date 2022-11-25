@@ -1,7 +1,12 @@
 <template>
   <v-app>
-    <h1>GenericCrud</h1>
-    <GenericCrud :builder="builder" :allItens="allItens"/>
+    <v-toolbar
+      color="primary"
+      dark
+    >
+      <h1>GenericCrud:</h1>
+    </v-toolbar>
+    <GenericCrud :builder="builder" :allItens="allItens" />
   </v-app>
 </template>
 
@@ -13,7 +18,7 @@ const builder = [
     type: 'number',
     indexable: false,
     searchable: false,
-    editable: true
+    editable: false
   },
   {
     view: 'Nome',
@@ -40,6 +45,14 @@ const builder = [
     editable: true
   },
   {
+    view: 'Salario',
+    value: 'userSalario',
+    type: 'number',
+    indexable: false,
+    searchable: true,
+    editable: true
+  },
+  {
     view: 'Dia do Cadastro',
     value: 'userCadasterDate',
     type: 'date',
@@ -55,21 +68,24 @@ const allItens = [
     userName: 'Ans',
     userWork: 'Dev',
     userWorkTime: 1,
-    userCadasterDate: '2022-11-09'
+    userCadasterDate: '2022-11-09',
+    userSalario: 1000
   },
   {
     userId: 2,
     userName: 'Fonts',
     userWork: 'Gamer',
     userWorkTime: 2,
-    userCadasterDate: '2022-11-10'
+    userCadasterDate: '2022-11-10',
+    userSalario: 2000
   },
   {
     userId: 3,
     userName: 'Gusta',
     userWork: 'Garoto de Prog',
     userWorkTime: 3,
-    userCadasterDate: '2022-11-11'
+    userCadasterDate: '2022-11-11',
+    userSalario: 3000
   },
 ]
 
