@@ -20,7 +20,6 @@
                 dark
                 v-bind="attrs"
                 v-on="on"
-                
               >
                 <v-icon>mdi-pencil</v-icon>
                 Novo Elemento
@@ -32,12 +31,14 @@
                   color="primary"
                   dark
                 >
-                  Editando:
+                  Criando:
                 </v-toolbar>
                 <v-card-text>
-                  <template v-for="obj in createInputs" >
-                    <TableCreate :createInputsObj="obj" :creating="creating" v-bind:key="obj.value" v-on:tableCreate="updateCreating($event)"/>
-                  </template>
+                  <v-form ref="createForm">
+                    <template v-for="obj in createInputs" >
+                      <TableCreate :createInputsObj="obj" :creating="creating" v-bind:key="obj.value" v-on:tableCreate="updateCreating($event)"/>
+                    </template>
+                  </v-form>
                 </v-card-text>
                 <v-card-actions class="justify-end">
                   <v-btn
@@ -46,7 +47,7 @@
                   >Fechar</v-btn>
                   <v-btn
                     text
-                    @click="dialog.value = false,createTableEditedItem() "
+                    @click="createTableEditedItem(), $refs.createForm.validate()? dialog.value = false :'' "
                   >Salvar</v-btn>
                 </v-card-actions>
               </v-card>
@@ -102,9 +103,11 @@
                       Editando:
                     </v-toolbar>
                     <v-card-text>
-                      <template v-for="obj in editables" >
-                        <TableEdit :editablesObj="obj" :item="{...item}" v-bind:key="obj.value" v-on:tableEdit="updateEditing($event)"/>
-                      </template>
+                      <v-form ref="editForm">
+                        <template v-for="obj in editables" >
+                          <TableEdit :editablesObj="obj" :item="{...item}" v-bind:key="obj.value" v-on:tableEdit="updateEditing($event)"/>
+                        </template>
+                      </v-form>
                     </v-card-text>
                     <v-card-actions class="justify-end">
                       <v-btn
@@ -113,7 +116,7 @@
                       >Fechar</v-btn>
                       <v-btn
                         text
-                        @click="dialog.value = false,updateTableEditedItem() "
+                        @click="updateTableEditedItem(), $refs.editForm.validate()? dialog.value = false :'' "
                       >Salvar</v-btn>
                     </v-card-actions>
                   </v-card>
@@ -173,18 +176,22 @@ export default {
       console.log(this.creating);
     },
     updateTableEditedItem() {
-      let list = [...this.updatedItems]
-      const objIndex = list.findIndex((obj => {
-        return this.isEquivalent({...obj}, {...this.editing.oldItem})
-      }))
-
-      list[objIndex] = this.editing.newItem
-      this.updatedItems = list
+      if (this.$refs.editForm.validate()) {
+        let list = [...this.updatedItems]
+        const objIndex = list.findIndex((obj => {
+          return this.isEquivalent({...obj}, {...this.editing.oldItem})
+        }))
+        list[objIndex] = this.editing.newItem
+        this.updatedItems = list
+      }
     },
     createTableEditedItem() {
-      let list = [...this.updatedItems]
-      list.push({...this.creating})
-      this.updatedItems = list
+      if (this.$refs.createForm.validate()) {
+        let list = [...this.updatedItems]
+        list.push({...this.creating})
+        this.updatedItems = list
+        this.$refs.createForm.reset()
+      }
     },
     isEquivalent(a, b) {
       let aProps = Object.getOwnPropertyNames(a);

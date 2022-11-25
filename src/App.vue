@@ -45,14 +45,6 @@ const builder = [
     editable: true
   },
   {
-    view: 'Salario',
-    value: 'userSalario',
-    type: 'number',
-    indexable: false,
-    searchable: true,
-    editable: true
-  },
-  {
     view: 'Dia do Cadastro',
     value: 'userCadasterDate',
     type: 'date',
@@ -65,28 +57,32 @@ const builder = [
 const allItens = [
   {
     userId: 1,
-    userName: 'Ans',
+    userName: 'Gustavo Anselmo',
     userWork: 'Dev',
-    userWorkTime: 1,
+    userWorkTime: 2,
     userCadasterDate: '2022-11-09',
-    userSalario: 1000
   },
   {
     userId: 2,
-    userName: 'Fonts',
-    userWork: 'Gamer',
-    userWorkTime: 2,
+    userName: 'Leonardo Fuentes',
+    userWork: 'Eletricista',
+    userWorkTime: 1,
     userCadasterDate: '2022-11-10',
-    userSalario: 2000
   },
   {
     userId: 3,
-    userName: 'Gusta',
-    userWork: 'Garoto de Prog',
+    userName: 'Gustavo Henrique',
+    userWork: 'Agricultor',
     userWorkTime: 3,
     userCadasterDate: '2022-11-11',
-    userSalario: 3000
   },
+  {
+    userId: 4,
+    userName: 'Cristian Fuentes',
+    userWork: 'Engenheiro',
+    userWorkTime: 5,
+    userCadasterDate: '2022-11-12',
+  }
 ]
 
 export default {

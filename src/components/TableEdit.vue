@@ -1,11 +1,11 @@
 <template>
   <v-flex align-self-center="true" :style="{ display: 'flex-box', alignItems: 'center', margin: '25px' }">
-    <v-text-field v-model="input" :label="text" prepend-icon="mdi-calendar-edit-outline" v-if="type == 'text'" />
+    <v-text-field v-model="input" :rules="inputsRules" :label="text" prepend-icon="mdi-calendar-edit-outline" v-if="type == 'text'" />
     <v-text-field
       type="number"   
       step="any"
       min="0"
-      :rules="[numberRule]"
+      :rules="inputsRules"
       v-model="input"
       :label="text"
       prepend-icon="mdi-format-list-numbered"
@@ -15,7 +15,7 @@
       <span>{{text}}</span>
       <v-menu max-width="290" >
         <template v-slot:activator="{ on }">
-          <v-text-field :value="input" :label="text" prepend-icon="mdi-calendar-range" v-on="on"></v-text-field>
+          <v-text-field :value="input" :rules="inputsRules" :label="text" prepend-icon="mdi-calendar-range" v-on="on"></v-text-field>
         </template>
         <v-date-picker v-model="input"></v-date-picker>
       </v-menu>
@@ -35,6 +35,9 @@ export default {
       value: this.editablesObj.value,
       type: this.editablesObj.type,
       input: this.item[this.editablesObj.value],
+      inputsRules: [
+        v => v != undefined && v.toString().length > 0 || 'Campo necessário'
+      ]
     }
   },
   methods: {

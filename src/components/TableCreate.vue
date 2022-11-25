@@ -1,11 +1,11 @@
 <template>
   <v-flex align-self-center="true" :style="{ display: 'flex-box', alignItems: 'center', margin: '25px' }">
-    <v-text-field v-model="input" :label="text" prepend-icon="mdi-calendar-edit-outline" v-if="type == 'text'" />
+    <v-text-field :rules="inputsRules" v-model="input" :label="text" prepend-icon="mdi-calendar-edit-outline" v-if="type == 'text'" />
     <v-text-field
+      :rules="inputsRules"
       type="number"   
       step="any"
       min="0"
-      :rules="[numberRule]"
       v-model="input"
       :label="text"
       prepend-icon="mdi-format-list-numbered"
@@ -15,7 +15,7 @@
       <span>{{text}}</span>
       <v-menu max-width="290" >
         <template v-slot:activator="{ on }">
-          <v-text-field :value="input" :label="text" prepend-icon="mdi-calendar-range" v-on="on"></v-text-field>
+          <v-text-field :rules="inputsRules" :value="input" :label="text" prepend-icon="mdi-calendar-range" v-on="on"></v-text-field>
         </template>
         <v-date-picker v-model="input"></v-date-picker>
       </v-menu>
@@ -35,6 +35,9 @@ export default {
       value: this.createInputsObj.value,
       type: this.createInputsObj.type,
       input: this.creating[this.createInputsObj.value],
+      inputsRules: [
+        v => v != undefined && v.toString().length > 0 || 'Campo necessário'
+      ]
     }
   },
   methods: {
@@ -44,7 +47,7 @@ export default {
     numberRule: val => {
       if(val < 0) return 'Please enter a positive number'
       return true
-    }
+    },
   },
   watch: {
     input() {

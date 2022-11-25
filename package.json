@@ -1,5 +1,5 @@
 {
-  "name": "new-crud",
+  "name": "generic-crud",
   "version": "0.1.0",
   "private": true,
   "scripts": {
